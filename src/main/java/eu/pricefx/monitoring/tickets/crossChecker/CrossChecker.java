@@ -2,11 +2,8 @@ package eu.pricefx.monitoring.tickets.crossChecker;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.ExecutionException;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
 import eu.pricefx.monitoring.tickets.crossChecker.configuration.Configuartion;
 import eu.pricefx.monitoring.tickets.crossChecker.dao.JiraTicketDao;
 import eu.pricefx.monitoring.tickets.crossChecker.dao.JitBitTicketDao;

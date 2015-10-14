@@ -2,7 +2,6 @@ package eu.pricefx.monitoring.tickets.crossChecker.dao;
 
 import java.io.IOException;
 import java.net.URI;
-import java.util.concurrent.ExecutionException;
 
 import org.springframework.http.HttpHeaders;
 import org.springframework.web.client.RestTemplate;
@@ -13,7 +12,6 @@ import com.atlassian.jira.rest.client.api.JiraRestClientFactory;
 import com.atlassian.jira.rest.client.api.domain.Issue;
 import com.atlassian.jira.rest.client.auth.BasicHttpAuthenticationHandler;
 import com.atlassian.jira.rest.client.internal.async.AsynchronousJiraRestClientFactory;
-import com.atlassian.util.concurrent.Promise;
 
 import eu.pricefx.monitoring.tickets.crossChecker.configuration.Configuartion;
 

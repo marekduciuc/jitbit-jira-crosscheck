@@ -33,23 +33,18 @@ public class JiraTicketDao {
   }
 
   public String getIssuState(String id) {
-    // * removing blans form issue id
-    Issue issue = null;
     try {
       final JiraRestClient restClient = restClientFactory.create(uri, myHandler);
       final IssueRestClient issuclient = restClient.getIssueClient();
-      issue = issuclient.getIssue(id).claim();
+      final Issue issue = issuclient.getIssue(id).claim();
       restClient.close();
+      return issue.getStatus().getName();
     } catch (IOException e) {
       // TODO Auto-generated catch block
       e.printStackTrace();
-    } finally {
-      if (issue != null) {
-        return issue.getStatus().getName();
-      } else {
-        return "";
-      }
-    }
+    } 
+       return "";
+   
   }
 
 }

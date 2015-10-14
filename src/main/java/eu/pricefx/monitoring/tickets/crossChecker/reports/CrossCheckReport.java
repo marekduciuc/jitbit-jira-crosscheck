@@ -28,21 +28,19 @@ public class CrossCheckReport {
         context.put("tickets", reportView);
 
         /* lets render a template */
-
-        PrintWriter writer;
-		try {
-			writer = new PrintWriter("index.html", "UTF-8");
-			Velocity.mergeTemplate("template.html", context, writer );
-		       writer.flush();
-		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (UnsupportedEncodingException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-
-        ;
+        
+			PrintWriter writer = null;
+      try {
+        writer = new PrintWriter("index.html", "UTF-8");
+        Velocity.mergeTemplate("template.html", context, writer );
+        writer.flush();
+      } catch (FileNotFoundException | UnsupportedEncodingException e) {
+        // TODO Auto-generated catch block
+        e.printStackTrace();
+      }  finally{
+         if (writer != null) writer.close();
+      }
+        
 
 
       

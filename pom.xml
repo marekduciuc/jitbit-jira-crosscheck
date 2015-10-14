@@ -18,12 +18,14 @@
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 
 		<!-- Logging -->
-		<slf4j.version>1.6.4</slf4j.version>
+		<slf4j.version>1.7.5</slf4j.version>
+		<logback.version>1.0.13</logback.version>
 
 		<!-- Spring -->
 		<spring-framework.version>4.2.1.RELEASE</spring-framework.version>
 
-
+		<jira-api.version>6.1.1</jira-api.version>
+		<jira-rest-java-client-core.version>3.0.0</jira-rest-java-client-core.version>
 
 
 		<!-- Test -->
@@ -33,11 +35,22 @@
 
 	<dependencies>
 		<!-- Logging -->
+
 		<dependency>
-			<groupId>org.slf4j</groupId>
-			<artifactId>slf4j-simple</artifactId>
-			<version>${slf4j.version}</version>
+		<groupId>org.slf4j</groupId>
+		<artifactId>slf4j-simple</artifactId>
+		<version>${slf4j.version}</version>
 		</dependency>
+<!-- 		<dependency> -->
+<!-- 			<groupId>ch.qos.logback</groupId> -->
+<!-- 			<artifactId>logback-core</artifactId> -->
+<!-- 			<version>${logback.version}</version> -->
+<!-- 		</dependency> -->
+<!-- 		<dependency> -->
+<!-- 			<groupId>ch.qos.logback</groupId> -->
+<!-- 			<artifactId>logback-classic</artifactId> -->
+<!-- 			<version>${logback.version}</version> -->
+<!-- 		</dependency> -->
 
 		<!-- Spring and Transactions -->
 		<dependency>
@@ -51,7 +64,7 @@
 			<artifactId>commons-codec</artifactId>
 			<version>1.10</version>
 		</dependency>
-<!-- 		Json Mapping -->
+		<!-- Json Mapping -->
 		<dependency>
 			<groupId>com.fasterxml.jackson.core</groupId>
 			<artifactId>jackson-databind</artifactId>
@@ -100,6 +113,20 @@
 			<version>1.8</version>
 		</dependency>
 	</dependencies>
+	<dependencyManagement>
+  <dependencies>
+    <dependency>
+      <groupId>org.apache.httpcomponents</groupId>
+      <artifactId>httpclient</artifactId>
+      <version>4.2.1-atlassian-2</version>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.httpcomponents</groupId>
+      <artifactId>httpasyncclient</artifactId>
+      <version>4.0-beta3-atlassian-1</version>
+    </dependency>
+  </dependencies>
+</dependencyManagement>
 
 
 	<build>

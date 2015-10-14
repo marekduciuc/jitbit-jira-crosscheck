@@ -1,0 +1,58 @@
+package eu.pricefx.monitoring.tickets.crossChecker.reports;
+
+import java.io.FileNotFoundException;
+import java.io.PrintWriter;
+import java.io.UnsupportedEncodingException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.List;
+import org.apache.velocity.VelocityContext;
+import org.apache.velocity.app.Velocity;
+
+public class CrossCheckReport {
+
+	final static String basicURL = "https://pricefx.jitbit.com/helpdesk/";
+	final static String JIRABASICURL = "https://pricefx.atlassian.net/";
+
+	public void run(List<ReportRecord> reportView) {
+		
+		Velocity.init();
+
+        /* lets make a Context and put data into it */
+
+        VelocityContext context = new VelocityContext();
+        
+        DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+        context.put("time",dateFormat.format(new Date()));
+        context.put("tickets", reportView);
+
+        /* lets render a template */
+
+        PrintWriter writer;
+		try {
+			writer = new PrintWriter("index.html", "UTF-8");
+			Velocity.mergeTemplate("template.html", context, writer );
+		       writer.flush();
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (UnsupportedEncodingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+        ;
+
+
+      
+	
+		
+	}
+
+	public CrossCheckReport() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
+}

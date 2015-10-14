@@ -1,0 +1,33 @@
+<html>
+<head>
+<title>Tickets Assigned to Engineering Vs Jira status</title>
+</head>
+<body>
+  <h1>Tickets Assigned to Engineering Vs Jira status</h1>
+  <table>
+    <tr>
+      <th>JitBit Id</th>
+      <th>Jitbit Subject</th>
+      <th>Jira Id</th>
+      <th>Jira Status</th>
+    </tr>
+    #foreach( $ticket in $tickets )
+    <tr>
+      <td><a
+        href="https://pricefx.jitbit.com/helpdesk/Ticket/$ticket.jitBitID"
+        target="_blank">$ticket.jitBitID</a></td>
+      <td><a
+        href="https://pricefx.jitbit.com/helpdesk/Ticket/$ticket.jitBitID"
+        target="_blank">$ticket.jitBitSubject</a></td> #if( $ticket.jiraID )
+      <td><a
+        href="https://pricefx.atlassian.net/browse/$ticket.jiraID"
+        target="_blank">$ticket.jiraID</a></td>
+      <td>$ticket.JiraStatus</td> #else
+      <td>No Jira Id specified</td>
+      <td>N/A</td> #end
+    </tr>
+    #end
+  </table>
+  <p>Genarted @ $time</p>
+</body>
+</html>

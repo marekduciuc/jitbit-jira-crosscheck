@@ -12,6 +12,7 @@ public class Configuartion {
 	private String jitBitTicketListUrl;
 	private String jitBitTicketUrl;
 	private String jitBitticketCustomFieldsUrl;
+	private String outputFile;
 	
 	static Configuartion configuartion = null;
 	
@@ -37,8 +38,8 @@ public class Configuartion {
 						configuartion.jitBitTicketListUrl = basUrlString + config.getString("jitBit.ticketList.path");
 						configuartion.jitBitTicketUrl = basUrlString + config.getString("jitBit.ticket.path");
 						configuartion.jitBitticketCustomFieldsUrl = basUrlString + config.getString("jitBit.ticketCustomFields.path");
-						
-						
+						configuartion.outputFile = config.getString("output.file");
+					
 					} catch (ConfigurationException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
@@ -121,6 +122,14 @@ public class Configuartion {
 	public void setJitBitticketCustomFieldsUrl(String jitBitticketCustomFieldsUrl) {
 		this.jitBitticketCustomFieldsUrl = jitBitticketCustomFieldsUrl;
 	}
+
+  public String getOutputFile() {
+    return outputFile;
+  }
+
+  public void setOutputFile(String outputFile) {
+    this.outputFile = outputFile;
+  }
 	
 	
 

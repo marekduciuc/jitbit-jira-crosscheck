@@ -38,16 +38,14 @@ public class CrossChecker {
             null));
       } else {
         String jiraStatus = "";
-        
           jiraStatus = jiraTicketDao.getIssuState(jiraIDString);
           records.add(new ReportRecord(t.getTicketID(), t.getSubject(),
               jiraIDString, jiraStatus));
       }
-
     }
     logger.info("Getting Jira Information Ends");
 
-    CrossCheckReport crossCheckReport = new CrossCheckReport();
+    CrossCheckReport crossCheckReport = new CrossCheckReport(configuartion);
 
     logger.info("Generating html Report Starts");
     crossCheckReport.run(records);

@@ -14,6 +14,7 @@ public class Configuartion {
 	private String jitBitticketCustomFieldsUrl;
 	private String outputFile;
 	private boolean updateJitbitTickes;
+	private boolean generateOutput;
 	
 	
 	static Configuartion configuartion = null;
@@ -42,6 +43,7 @@ public class Configuartion {
 						configuartion.jitBitticketCustomFieldsUrl = basUrlString + config.getString("jitBit.ticketCustomFields.path");
 						configuartion.outputFile = config.getString("output.file");
 						configuartion.updateJitbitTickes = config.getBoolean("update.JitbitTickes", false);
+						configuartion.generateOutput = config.getBoolean("generate.output", true);
 					
 					} catch (ConfigurationException e) {
 						// TODO Auto-generated catch block
@@ -140,6 +142,14 @@ public class Configuartion {
 
   public void setUpdateJitbitTickes(boolean updateJitbitTickes) {
     this.updateJitbitTickes = updateJitbitTickes;
+  }
+
+  public boolean isGenerateOutput() {
+    return generateOutput;
+  }
+
+  public void setGenerateOutput(boolean generateOutput) {
+    this.generateOutput = generateOutput;
   }
 	
 	

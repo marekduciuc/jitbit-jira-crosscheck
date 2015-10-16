@@ -49,12 +49,12 @@ public class CrossChecker {
       }
     }
     logger.info("Getting Jira Information Ends");
-
-    CrossCheckReport crossCheckReport = new CrossCheckReport(configuartion);
-
-    logger.info("Generating html Report Starts");
-    crossCheckReport.run(records);
-    logger.info("Generating html Report Ends");
+    if(configuartion.isGenerateOutput()) {
+      logger.info("Generating html Report Starts");
+      CrossCheckReport crossCheckReport = new CrossCheckReport(configuartion);
+      crossCheckReport.run(records);
+      logger.info("Generating html Report Ends");
+    }
     logger.info("Done");
 
   }

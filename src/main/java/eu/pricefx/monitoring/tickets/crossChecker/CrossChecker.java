@@ -31,7 +31,7 @@ public class CrossChecker {
     logger.info("Getting Jira Information Starts");
     for (JitbitTicket t : tickets) {
       List<CustomField> customFieldsList = jitBitTicketDao
-          .getCustomFieldsList(Integer.parseInt(t.getTicketID()));
+          .getCustomFieldsList(t.getTicketID());
       String jiraIDString = jitBitTicketDao.getJiraIdValue(customFieldsList);
       if (jiraIDString == null) {
         records.add(new ReportRecord(t.getTicketID(), t.getSubject(), null,
@@ -41,6 +41,9 @@ public class CrossChecker {
           jiraStatus = jiraTicketDao.getIssuState(jiraIDString);
           records.add(new ReportRecord(t.getTicketID(), t.getSubject(),
               jiraIDString, jiraStatus));
+          logger.info("Updating ticket number: "+t.getTicketID()+" starts");
+          jitBitTicketDao.updateTicket(t.getTicketID(),jiraStatus);
+          logger.info("Updating ticket number: "+t.getTicketID()+" ends");
       }
     }
     logger.info("Getting Jira Information Ends");

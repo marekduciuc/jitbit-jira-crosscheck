@@ -7,13 +7,17 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+
 import org.apache.velocity.VelocityContext;
 import org.apache.velocity.app.Velocity;
+
+import eu.pricefx.monitoring.tickets.crossChecker.configuration.Configuartion;
 
 public class CrossCheckReport {
 
 	final static String basicURL = "https://pricefx.jitbit.com/helpdesk/";
 	final static String JIRABASICURL = "https://pricefx.atlassian.net/";
+	final Configuartion config;
 
 	public void run(List<ReportRecord> reportView) {
 		
@@ -31,7 +35,7 @@ public class CrossCheckReport {
         
 			PrintWriter writer = null;
       try {
-        writer = new PrintWriter("index.html", "UTF-8");
+        writer = new PrintWriter(config.getOutputFile(), "UTF-8");
         Velocity.mergeTemplate("template.html", context, writer );
         writer.flush();
       } catch (FileNotFoundException | UnsupportedEncodingException e) {
@@ -48,8 +52,9 @@ public class CrossCheckReport {
 		
 	}
 
-	public CrossCheckReport() {
-		super();
+	public CrossCheckReport(Configuartion conf) {
+	  super();
+		config = conf;
 		// TODO Auto-generated constructor stub
 	}
 

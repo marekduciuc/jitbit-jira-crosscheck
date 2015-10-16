@@ -6,7 +6,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.stream.Collectors;
 
-
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
@@ -24,7 +23,7 @@ import eu.pricefx.monitoring.tickets.crossChecker.model.JitBitTicketDetail;
 import eu.pricefx.monitoring.tickets.crossChecker.model.JitbitTicket;
 import eu.pricefx.monitoring.tickets.crossChecker.model.JitbitStatus;
 
-public class JitBitTicketDao  {
+public class JitBitTicketDao  implements IJitbitTicketDao {
 	
 	final String ticketListurl;
 	final String ticketDetetailUrl;
@@ -38,10 +37,10 @@ public class JitBitTicketDao  {
 	
 	public JitBitTicketDao(Configuartion conf) {
 		 config = conf;
-		 headers.add("Authorization", "Basic " +   Base64Wrapper.encode(config.getJitBitUser()+":"+config.getJitbitPassword()));
 		 ticketListurl = config.getJitBitTicketListUrl();
 		 ticketDetetailUrl = config.getJitBitTicketUrl();
 		 ticketCustomFiledsUrl = config.getJitBitticketCustomFieldsUrl();
+		 headers.add("Authorization", "Basic " +   Base64Wrapper.encode(config.getJitBitUser()+":"+config.getJitbitPassword()));
 		 this.entity = new HttpEntity<String>("parameters", headers);
 	}
 	
@@ -54,41 +53,41 @@ public class JitBitTicketDao  {
 		return tickets;
 	}
 	
-	public   String getTicketDetialAsString(int id){
+	public   String getTicketDetialAsString(String ticketId){
 		String targetUrl= UriComponentsBuilder.fromUriString(ticketDetetailUrl)
-	 			.queryParam("id", id)
+	 			.queryParam("id", ticketId)
 	 			.build().toString();
 		ResponseEntity<String> ticketsString =  restTemplate.exchange( targetUrl,HttpMethod.GET,entity,String.class);
 		//String ticket = gson.fromJson(ticketsString.getBody(), new TypeToken<JitbitTicket>(){}.getType());
 		return ticketsString.getBody();
 	}
 	
-	public   JitBitTicketDetail getTicketDetial(int id){
-		String ticketsString = getTicketDetialAsString(id);
+	public   JitBitTicketDetail getTicketDetial(String ticketId){
+		String ticketsString = getTicketDetialAsString(ticketId);
 		JitBitTicketDetail ticket = gson.fromJson(ticketsString, new TypeToken<JitBitTicketDetail>(){}.getType());
 		return ticket;
 	}
 	
-	public   HashMap[] getTicketDetailAsMap(int id){
+	public   HashMap[] getTicketDetailAsMap(int ticketId){
 		String targetUrl= UriComponentsBuilder.fromUriString(ticketDetetailUrl)
-				.queryParam("id", id)
+				.queryParam("id", ticketId)
 				.build().toString();
 		ResponseEntity<HashMap[]> ticketAsMap =  restTemplate.exchange( targetUrl,HttpMethod.GET,entity,HashMap[].class);
 		return ticketAsMap.getBody();
 	}
 	
 	
-	public   String getCustomFieldsString(int TicketId){
+	public   String getCustomFieldsString(String ticketId){
 		String targetUrl= UriComponentsBuilder.fromUriString(ticketCustomFiledsUrl)
-				.queryParam("id", TicketId)
+				.queryParam("id", ticketId)
 				.build().toString();
 		ResponseEntity<String> ticketsString =  restTemplate.exchange( targetUrl,HttpMethod.GET,entity,String.class);
 		//String ticket = gson.fromJson(ticketsString.getBody(), new TypeToken<JitbitTicket>(){}.getType());
 		return ticketsString.getBody();
 	}
 	
-	public List<CustomField> getCustomFieldsList(int TicketId){
-		String ticketsString = getCustomFieldsString(TicketId);
+	public List<CustomField> getCustomFieldsList(String ticketId){
+		String ticketsString = getCustomFieldsString(ticketId);
 		CustomField[] fields = gson.fromJson(ticketsString, new TypeToken<CustomField[]>(){}.getType());
 		return Arrays.asList(fields);
 	}
@@ -101,5 +100,7 @@ public class JitBitTicketDao  {
 			}
 		return null;
 	}
+
+
 
 }

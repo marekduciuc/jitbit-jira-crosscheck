@@ -17,8 +17,6 @@ import eu.pricefx.monitoring.tickets.crossChecker.configuration.Configuartion;
 
 public class JiraTicketDao {
 
-  final HttpHeaders headers = new HttpHeaders();
-  final RestTemplate restTemplate = new RestTemplate();
   final URI uri;
   final Configuartion configuartion;
   final JiraRestClientFactory restClientFactory;
@@ -28,8 +26,7 @@ public class JiraTicketDao {
     configuartion = config;
     this.uri = URI.create(configuartion.getJiraBaseUrl());
     restClientFactory = new AsynchronousJiraRestClientFactory();
-    myHandler = new BasicHttpAuthenticationHandler(configuartion.getJiraUser(),
-        configuartion.getJiraPassword());
+    myHandler = new BasicHttpAuthenticationHandler(configuartion.getJiraUser(),configuartion.getJiraPassword());
   }
 
   public String getIssuState(String id) {

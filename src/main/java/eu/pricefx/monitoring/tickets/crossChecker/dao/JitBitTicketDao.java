@@ -1,6 +1,7 @@
 package eu.pricefx.monitoring.tickets.crossChecker.dao;
 
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
@@ -45,12 +46,35 @@ public class JitBitTicketDao  implements IJitbitTicketDao {
 	}
 	
 	public  List<JitbitTicket> getTickets( ){
-		String targetUrl= UriComponentsBuilder.fromUriString(ticketListurl)
-				 			.queryParam("statusId", JitbitStatus.ASSIGNED_TO_ENGENEERING.value)
-				 			.build().toString();
-		ResponseEntity<String> ticketsString =  restTemplate.exchange( targetUrl,HttpMethod.GET,entity,String.class);
-		List<JitbitTicket> tickets = gson.fromJson(ticketsString.getBody(), new TypeToken<List<JitbitTicket>>(){}.getType());
-		return tickets;
+	  List<JitbitTicket> tickets = new ArrayList<JitbitTicket>();
+	  List<JitbitTicket> tickets2 = new ArrayList<JitbitTicket>();
+	  ResponseEntity<String> ticketsString = null;
+	  String targetUrl =null;
+	  int offset = 0;
+	  
+	 do{
+	    if (offset > 0) {
+	       targetUrl= UriComponentsBuilder.fromUriString(ticketListurl)
+	          .queryParam("statusId", JitbitStatus.ASSIGNED_TO_ENGENEERING.value)
+	          .queryParam("count", 10)
+	          .queryParam("offset",offset)
+	          .build().toString();
+	      
+	    }else {
+	       targetUrl= UriComponentsBuilder.fromUriString(ticketListurl)
+	          .queryParam("statusId", JitbitStatus.ASSIGNED_TO_ENGENEERING.value)
+	          .queryParam("count", 10)
+	          .build().toString();
+      }
+	     offset+=10; 
+	     ticketsString =  restTemplate.exchange( targetUrl,HttpMethod.GET,entity,String.class);
+	     tickets2  = gson.fromJson(ticketsString.getBody(), new TypeToken<List<JitbitTicket>>(){}.getType());
+	     tickets.addAll(tickets2);
+	    
+	 }while (tickets2.size() ==10); 
+	    
+	System.out.println(tickets.size());
+	return tickets;
 	}
 	
 	public   String getTicketDetialAsString(String ticketId){
@@ -87,8 +111,9 @@ public class JitBitTicketDao  implements IJitbitTicketDao {
 	}
 	
 	public List<CustomField> getCustomFieldsList(String ticketId){
-		String ticketsString = getCustomFieldsString(ticketId);
-		CustomField[] fields = gson.fromJson(ticketsString, new TypeToken<CustomField[]>(){}.getType());
+
+    String fieldsString = getCustomFieldsString(ticketId);
+		CustomField[] fields = gson.fromJson(fieldsString, new TypeToken<CustomField[]>(){}.getType());
 		return Arrays.asList(fields);
 	}
 	
@@ -100,7 +125,22 @@ public class JitBitTicketDao  implements IJitbitTicketDao {
 			}
 		return null;
 	}
+	
+//	POST https://[helpdesk-url]/api/SetCustomField
+//	ticketId int Ticket ID
+//	fieldId int Custom field ID
+//	value string  Value as a string. For checkboxes pass true or false. For dropdowns pass the option ID. For dates pass date as a string in any format.
 
+	public String updateTicket(String ticketId,String jiraStatus ){
+	  
+	    String targetUrl= UriComponentsBuilder.fromUriString("https://pricefx.jitbit.com/helpdesk/api/SetCustomField")
+	        .queryParam("ticketId", ticketId)
+	        .queryParam("fieldId", "11705")
+	        .queryParam("value", jiraStatus)
+	        .build().toString();
+	      ResponseEntity<String> reponceString  =  restTemplate.exchange( targetUrl,HttpMethod.POST,entity,String.class);
+	      return reponceString.getBody();
+	}
 
 
 }

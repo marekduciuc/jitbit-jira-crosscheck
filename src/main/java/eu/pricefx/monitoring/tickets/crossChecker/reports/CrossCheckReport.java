@@ -15,47 +15,43 @@ import eu.pricefx.monitoring.tickets.crossChecker.configuration.Configuartion;
 
 public class CrossCheckReport {
 
-	final static String basicURL = "https://pricefx.jitbit.com/helpdesk/";
-	final static String JIRABASICURL = "https://pricefx.atlassian.net/";
-	final Configuartion config;
+  final static String basicURL = "https://pricefx.jitbit.com/helpdesk/";
+  final static String JIRABASICURL = "https://pricefx.atlassian.net/";
+  final Configuartion config;
 
-	public void run(List<ReportRecord> reportView) {
-		
-		Velocity.init();
+  public void run(List<ReportRecord> reportView) {
 
-        /* lets make a Context and put data into it */
+    Velocity.init();
 
-        VelocityContext context = new VelocityContext();
-        
-        DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
-        context.put("time",dateFormat.format(new Date()));
-        context.put("tickets", reportView);
+    /* lets make a Context and put data into it */
 
-        /* lets render a template */
-        
-			PrintWriter writer = null;
-      try {
-        writer = new PrintWriter(config.getOutputFile(), "UTF-8");
-        Velocity.mergeTemplate("template.html", context, writer );
-        writer.flush();
-      } catch (FileNotFoundException | UnsupportedEncodingException e) {
-        // TODO Auto-generated catch block
-        e.printStackTrace();
-      }  finally{
-         if (writer != null) writer.close();
-      }
-        
+    VelocityContext context = new VelocityContext();
 
+    DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+    context.put("time", dateFormat.format(new Date()));
+    context.put("tickets", reportView);
 
-      
-	
-		
-	}
+    /* lets render a template */
 
-	public CrossCheckReport(Configuartion conf) {
-	  super();
-		config = conf;
-		// TODO Auto-generated constructor stub
-	}
+    PrintWriter writer = null;
+    try {
+      writer = new PrintWriter(config.getOutputFile(), "UTF-8");
+      Velocity.mergeTemplate("template.html", context, writer);
+      writer.flush();
+    } catch (FileNotFoundException | UnsupportedEncodingException e) {
+      // TODO Auto-generated catch block
+      e.printStackTrace();
+    } finally {
+      if (writer != null)
+        writer.close();
+    }
+
+  }
+
+  public CrossCheckReport(Configuartion conf) {
+    super();
+    config = conf;
+    // TODO Auto-generated constructor stub
+  }
 
 }

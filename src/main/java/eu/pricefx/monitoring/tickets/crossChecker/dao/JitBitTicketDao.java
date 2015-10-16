@@ -72,8 +72,6 @@ public class JitBitTicketDao  implements IJitbitTicketDao {
 	     tickets.addAll(tickets2);
 	    
 	 }while (tickets2.size() ==10); 
-	    
-	System.out.println(tickets.size());
 	return tickets;
 	}
 	
@@ -91,15 +89,6 @@ public class JitBitTicketDao  implements IJitbitTicketDao {
 		JitBitTicketDetail ticket = gson.fromJson(ticketsString, new TypeToken<JitBitTicketDetail>(){}.getType());
 		return ticket;
 	}
-	
-	public   HashMap[] getTicketDetailAsMap(int ticketId){
-		String targetUrl= UriComponentsBuilder.fromUriString(ticketDetetailUrl)
-				.queryParam("id", ticketId)
-				.build().toString();
-		ResponseEntity<HashMap[]> ticketAsMap =  restTemplate.exchange( targetUrl,HttpMethod.GET,entity,HashMap[].class);
-		return ticketAsMap.getBody();
-	}
-	
 	
 	public   String getCustomFieldsString(String ticketId){
 		String targetUrl= UriComponentsBuilder.fromUriString(ticketCustomFiledsUrl)
@@ -131,7 +120,7 @@ public class JitBitTicketDao  implements IJitbitTicketDao {
 //	fieldId int Custom field ID
 //	value string  Value as a string. For checkboxes pass true or false. For dropdowns pass the option ID. For dates pass date as a string in any format.
 
-	public String updateTicket(String ticketId,String jiraStatus ){
+	public String updateJiraStatus(String ticketId,String jiraStatus ){
 	  
 	    String targetUrl= UriComponentsBuilder.fromUriString("https://pricefx.jitbit.com/helpdesk/api/SetCustomField")
 	        .queryParam("ticketId", ticketId)

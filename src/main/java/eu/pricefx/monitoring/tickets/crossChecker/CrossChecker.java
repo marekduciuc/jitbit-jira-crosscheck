@@ -41,9 +41,11 @@ public class CrossChecker {
           jiraStatus = jiraTicketDao.getIssuState(jiraIDString);
           records.add(new ReportRecord(t.getTicketID(), t.getSubject(),
               jiraIDString, jiraStatus));
-          logger.info("Updating ticket number: "+t.getTicketID()+" starts");
-          jitBitTicketDao.updateTicket(t.getTicketID(),jiraStatus);
-          logger.info("Updating ticket number: "+t.getTicketID()+" ends");
+          if (configuartion.isUpdateJitbitTickes()){
+            logger.info("Updating ticket number: "+t.getTicketID()+" starts");
+            jitBitTicketDao.updateJiraStatus(t.getTicketID(),jiraStatus);
+            logger.info("Updating ticket number: "+t.getTicketID()+" ends");
+          }
       }
     }
     logger.info("Getting Jira Information Ends");

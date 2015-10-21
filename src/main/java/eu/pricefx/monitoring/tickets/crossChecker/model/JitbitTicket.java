@@ -1,5 +1,8 @@
 package eu.pricefx.monitoring.tickets.crossChecker.model;
 
+import java.util.Map;
+
+import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
@@ -17,8 +20,23 @@ public class JitbitTicket extends AbstractJitBitTicket {
 	private String TechLastName;
 	private String LastUpdated;
 	private String CompanyName;
-	private String SectionID;
+	private int SectionID;
 
+	@JsonCreator
+	public JitbitTicket(Map<String,Object> props){
+	 super(props);
+	  UserName = (String)props.get(UserName);
+	  Technician = (String)props.get(Technician);
+	  FirstName = (String)props.get(FirstName);
+	  LastName = (String)props.get(LastName);
+	  TechFirstName= (String)props.get(TechFirstName);
+	  TechLastName = (String)props.get(TechLastName);
+	  LastUpdated = (String)props.get(LastUpdated);
+	  CompanyName = (String)props.get(CompanyName);
+	 // SectionID = (int)props.get(SectionID);
+	}
+	
+	
 	public String getUserName() {
 		return UserName;
 	}
@@ -83,11 +101,11 @@ public class JitbitTicket extends AbstractJitBitTicket {
 		CompanyName = companyName;
 	}
 
-	public String getSectionID() {
+	public int getSectionID() {
 		return SectionID;
 	}
 
-	public void setSectionID(String sectionID) {
+	public void setSectionID(int sectionID) {
 		SectionID = sectionID;
 	}
 

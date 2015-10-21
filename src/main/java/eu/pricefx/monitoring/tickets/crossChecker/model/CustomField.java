@@ -1,5 +1,8 @@
 package eu.pricefx.monitoring.tickets.crossChecker.model;
 
+import java.util.Map;
+
+import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 /**
@@ -16,59 +19,54 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class CustomField {
 
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((FieldID == null) ? 0 : FieldID.hashCode());
-		result = prime * result + ((Value == null) ? 0 : Value.hashCode());
-		return result;
-	}
+  private String FieldName;
+  private int FieldID;
+  private int Type;
+  private int UsageType;
+  private String Value;
+  private String ValueWithOption;
+  private boolean Mandatory;
+ 
+  @JsonCreator
+  public CustomField(Map<String,Object> props) {
+    FieldName = (String) props.get("FieldName");
+    FieldID  = (int) props.get("FieldID");
+    Type  = (int) props.get("Type");
+    UsageType  = (int) props.get("UsageType");
+    if  (props.get("Value") instanceof Integer) {
+      Value  = String.valueOf( props.get("Value"));
+    }
+    if  (props.get("Value") instanceof String) {
+      Value  = (String) props.get("Value");
+    }
+    ValueWithOption  = (String) props.get("ValueWithOption");
+    Mandatory  = (Boolean) props.get("Mandatory");
+  }
+
 	
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		CustomField other = (CustomField) obj;
-		if (FieldID == null) {
-			if (other.FieldID != null)
-				return false;
-		} else if (!FieldID.equals(other.FieldID))
-			return false;
-		if (Value == null) {
-			if (other.Value != null)
-				return false;
-		} else if (!Value.equals(other.Value))
-			return false;
-		return true;
-	}
 	public String getFieldName() {
 		return FieldName;
 	}
 	public void setFieldName(String fieldName) {
 		FieldName = fieldName;
 	}
-	public String getFieldID() {
+	public int getFieldID() {
 		return FieldID;
 	}
-	public void setFieldID(String fieldID) {
+	public void setFieldID(int fieldID) {
 		FieldID = fieldID;
 	}
-	public String getType() {
+	public int getType() {
 		return Type;
 	}
-	public void setType(String type) {
+	public void setType(int type) {
 		Type = type;
 	}
-	public String getUsageType() {
+	public int getUsageType() {
 		return UsageType;
 	}
-	public void setUsageType(String usageType) {
-		UsageType = usageType;
+	public void setUsageType(int usageType) {
+	  UsageType = usageType;
 	}
 	public String getValue() {
 		return Value;
@@ -91,17 +89,7 @@ public class CustomField {
 
 
 	
-	public CustomField() {
-		// TODO Auto-generated constructor stub
-	}
-
-	 private String FieldName;
-	 private String FieldID;
-	 private String Type;
-	 private String UsageType;
-	 private String Value;
-	 private String ValueWithOption;
-	 private boolean Mandatory;
+	
 	
 	
 }

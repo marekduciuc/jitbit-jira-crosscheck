@@ -2,6 +2,7 @@ package eu.pricefx.monitoring.tickets.crossChecker.dao;
 
 import java.util.List;
 
+import eu.pricefx.monitoring.tickets.crossChecker.model.AbstractJitBitTicket;
 import eu.pricefx.monitoring.tickets.crossChecker.model.CustomField;
 import eu.pricefx.monitoring.tickets.crossChecker.model.JitBitTicketDetail;
 import eu.pricefx.monitoring.tickets.crossChecker.model.JitbitTicket;
@@ -19,5 +20,6 @@ public interface IJitbitTicketDao {
   public abstract List<CustomField> getCustomFieldsList(String ticketId);
 
   public abstract String getJiraIdValue(List<CustomField> customFields);
+
 
 }

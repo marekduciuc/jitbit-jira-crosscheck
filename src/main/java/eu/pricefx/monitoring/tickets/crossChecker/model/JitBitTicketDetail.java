@@ -2,25 +2,58 @@ package eu.pricefx.monitoring.tickets.crossChecker.model;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class JitBitTicketDetail extends AbstractJitBitTicket {
 
+  @JsonProperty
 	private List<Attachment> Attachments = new ArrayList<Attachment>();
-	private List<Tag> Tags = new ArrayList<Tag>();
+  @JsonProperty
+  private List<Tag> Tags = new ArrayList<Tag>();
+  @JsonProperty
 	private String OnBehalfUserName;
-	private List<JitBitUser> SubmitterUserInfo = new ArrayList<JitBitUser>();
+  @JsonProperty
+	private JitBitUser SubmitterUserInfo = new JitBitUser();
+  @JsonProperty
 	private JitBitUser AssigneeUserInfo = new JitBitUser();
+  @JsonProperty
 	private String Url;
+  @JsonProperty
 	private List<Object> ViewingTechNames = new ArrayList<Object>();
+  @JsonProperty
 	private String Body;
+  @JsonProperty
 	private String StartDate;
+  @JsonProperty
 	private Integer TimeSpentInSeconds;
+  @JsonProperty
 	private Boolean SubmittedByCurrentUser;
+  @JsonProperty
 	private Boolean IsInKb;
+  @JsonProperty
+	private JitBitIntegrationInfo Integrations;
 	
+  
+  @JsonCreator
+  public JitBitTicketDetail(Map<String,Object> props) {
+    super(props);
+    OnBehalfUserName = (String) props.get("OnBehalfUserName");
+    Url = (String) props.get("Url");
+    StartDate = (String) props.get("StartDate");
+    TimeSpentInSeconds = (int) props.get("TimeSpentInSeconds");
+    SubmittedByCurrentUser = (Boolean) props.get("SubmittedByCurrentUser");
+    IsInKb = (Boolean) props.get("IsInKb");
+    Integrations = new JitBitIntegrationInfo( (Map<String,Object>)props.get("Integrations"));
+    
+  }
+  
+  
+  
 	public List<Attachment> getAttachments() {
 		return Attachments;
 	}
@@ -45,11 +78,11 @@ public class JitBitTicketDetail extends AbstractJitBitTicket {
 		OnBehalfUserName = onBehalfUserName;
 	}
 
-	public List<JitBitUser> getSubmitterUserInfo() {
+	public JitBitUser getSubmitterUserInfo() {
 		return SubmitterUserInfo;
 	}
 
-	public void setSubmitterUserInfo(List<JitBitUser> submitterUserInfo) {
+	public void setSubmitterUserInfo(JitBitUser submitterUserInfo) {
 		SubmitterUserInfo = submitterUserInfo;
 	}
 
@@ -116,5 +149,14 @@ public class JitBitTicketDetail extends AbstractJitBitTicket {
 	public void setIsInKb(Boolean isInKb) {
 		IsInKb = isInKb;
 	}
+
+  public JitBitIntegrationInfo getIntegrations() {
+    return Integrations;
+  }
+
+  public void setIntegrations(JitBitIntegrationInfo integrations) {
+    Integrations = integrations;
+  }
+ 
 
 }

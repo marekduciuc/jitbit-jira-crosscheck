@@ -1,5 +1,9 @@
 package eu.pricefx.monitoring.tickets.crossChecker.model;
 
+import java.util.Map;
+
+import com.fasterxml.jackson.annotation.JsonCreator;
+
 public abstract class AbstractJitBitTicket {
 
 	public AbstractJitBitTicket() {
@@ -8,23 +12,53 @@ public abstract class AbstractJitBitTicket {
 
 	private String TicketID;
 	private String IssueID;
-	private String Priority;
+	private int Priority;
 	private String DueDate;
-	private String CategoryID;
+	private int CategoryID;
 	private String CategoryName;
 	private String StatusID;
 	private String Status;
 	private String IssueDate;
-	private String Subject;
-	private String UserID;
-	private String AssignedToUserID;
+	protected String Subject;
+	private int UserID;
+	private int AssignedToUserID;
 	private String ResolvedDate;
 	private Boolean UpdatedByUser;
 	private Boolean UpdatedByPerformer;
 	private Boolean UpdatedForTechView;
 	private Boolean IsCurrentUserTechInThisCategory;
 	
-
+	
+  @JsonCreator
+	public AbstractJitBitTicket(Map<String,Object> props){
+    if (props.containsKey("TicketID")) {
+      TicketID =  String.valueOf(props.get("TicketID"));
+      IssueID = TicketID;
+    }
+     
+   else {
+      TicketID =   String.valueOf(props.get("IssueID"));
+      IssueID = TicketID;
+        
+    }
+      
+    Priority = (int) props.get("Priority");
+	  DueDate = (String) props.get("DueDate");
+	  CategoryID = (int) props.get("CategoryID");
+	  CategoryName = (String) props.get("CategoryName");
+	  Status = (String) props.get("Status");
+	  IssueDate = (String) props.get("IssueDate");
+	  Subject = (String) props.get("Subject");
+	  UserID = (int) props.get("UserID");
+	  AssignedToUserID = (int) props.get("AssignedToUserID");
+	  ResolvedDate = (String) props.get("ResolvedDate");
+	  UpdatedByUser = (Boolean) props.get("UpdatedByUser");
+	  UpdatedByPerformer = (Boolean) props.get("UpdatedByPerformer");
+	  UpdatedForTechView = (Boolean) props.get("UpdatedForTechView");
+	  IsCurrentUserTechInThisCategory = (Boolean) props.get("IsCurrentUserTechInThisCategory");
+	}
+  
+  
 	public String getTicketID() {
 		
 		if  ((TicketID == null) && (IssueID != null)) {
@@ -52,11 +86,11 @@ public abstract class AbstractJitBitTicket {
 		IssueID = ticletID;
 	}
 
-	public String getPriority() {
+	public int getPriority() {
 		return Priority;
 	}
 
-	public void setPriority(String priority) {
+	public void setPriority(int priority) {
 		Priority = priority;
 	}
 
@@ -68,11 +102,11 @@ public abstract class AbstractJitBitTicket {
 		DueDate = dueDate;
 	}
 
-	public String getCategoryID() {
+	public int getCategoryID() {
 		return CategoryID;
 	}
 
-	public void setCategoryID(String categoryID) {
+	public void setCategoryID(int categoryID) {
 		CategoryID = categoryID;
 	}
 
@@ -124,19 +158,19 @@ public abstract class AbstractJitBitTicket {
 		Subject = subject;
 	}
 
-	public String getUserID() {
+	public int getUserID() {
 		return UserID;
 	}
 
-	public void setUserID(String userID) {
+	public void setUserID(int userID) {
 		UserID = userID;
 	}
 
-	public String getAssignedToUserID() {
+	public int getAssignedToUserID() {
 		return AssignedToUserID;
 	}
 
-	public void setAssignedToUserID(String assignedToUserID) {
+	public void setAssignedToUserID(int assignedToUserID) {
 		AssignedToUserID = assignedToUserID;
 	}
 

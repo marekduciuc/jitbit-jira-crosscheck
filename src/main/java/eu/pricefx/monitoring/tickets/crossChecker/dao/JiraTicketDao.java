@@ -13,7 +13,7 @@ import com.atlassian.sal.api.net.ReturningResponseHandler;
 
 import eu.pricefx.monitoring.tickets.crossChecker.configuration.Configuartion;
 
-public class JiraTicketDao {
+public class JiraTicketDao implements IJiraTicketDao {
 
   final URI uri;
   final Configuartion configuartion;
@@ -28,6 +28,10 @@ public class JiraTicketDao {
         configuartion.getJiraPassword());
   }
 
+  /* (non-Javadoc)
+   * @see eu.pricefx.monitoring.tickets.crossChecker.dao.IJiraTicketDao#getIssue(java.lang.String)
+   */
+  @Override
   public Issue getIssue(String id) {
     final JiraRestClient restClient = restClientFactory.create(uri, myHandler);
     final IssueRestClient issuclient = restClient.getIssueClient();
@@ -42,6 +46,10 @@ public class JiraTicketDao {
     return issue;
   }
 
+  /* (non-Javadoc)
+   * @see eu.pricefx.monitoring.tickets.crossChecker.dao.IJiraTicketDao#getIssuStateAndSolution(java.lang.String)
+   */
+  @Override
   public String getIssuStateAndSolution(String id) {
     final StringBuilder statusAndSolution = new StringBuilder();
     final Issue issue = getIssue(id);

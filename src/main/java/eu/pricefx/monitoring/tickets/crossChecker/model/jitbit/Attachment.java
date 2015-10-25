@@ -1,4 +1,4 @@
-package eu.pricefx.monitoring.tickets.crossChecker.model;
+package eu.pricefx.monitoring.tickets.crossChecker.model.jitbit;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;

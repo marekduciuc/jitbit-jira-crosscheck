@@ -1,4 +1,4 @@
-package eu.pricefx.monitoring.tickets.crossChecker.model;
+package eu.pricefx.monitoring.tickets.crossChecker.model.jitbit;
 
 import java.util.ArrayList;
 import java.util.List;

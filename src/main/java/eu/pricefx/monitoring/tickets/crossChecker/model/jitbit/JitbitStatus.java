@@ -1,4 +1,4 @@
-package eu.pricefx.monitoring.tickets.crossChecker.model;
+package eu.pricefx.monitoring.tickets.crossChecker.model.jitbit;
 
 public enum JitbitStatus {
 	 ASSIGNED_TO_COLSUNTING (4346),

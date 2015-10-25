@@ -2,13 +2,15 @@ package eu.pricefx.monitoring.tickets.crossChecker;
 
 import java.util.ArrayList;
 import java.util.List;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
 import eu.pricefx.monitoring.tickets.crossChecker.configuration.Configuartion;
 import eu.pricefx.monitoring.tickets.crossChecker.dao.JiraTicketDao;
-import eu.pricefx.monitoring.tickets.crossChecker.dao.JitBitTicketDao;
-import eu.pricefx.monitoring.tickets.crossChecker.model.CustomField;
-import eu.pricefx.monitoring.tickets.crossChecker.model.JitbitTicket;
+import eu.pricefx.monitoring.tickets.crossChecker.dao.JitbitTicketJerseyDao;
+import eu.pricefx.monitoring.tickets.crossChecker.model.jitbit.CustomField;
+import eu.pricefx.monitoring.tickets.crossChecker.model.jitbit.JitbitTicket;
 import eu.pricefx.monitoring.tickets.crossChecker.reports.CrossCheckReport;
 import eu.pricefx.monitoring.tickets.crossChecker.reports.ReportRecord;
 
@@ -21,7 +23,7 @@ public class CrossChecker {
     logger.info("Startin");
 
     Configuartion configuartion = Configuartion.getInstance();
-    JitBitTicketDao jitBitTicketDao = new JitBitTicketDao(configuartion);
+    JitbitTicketJerseyDao jitBitTicketDao = new JitbitTicketJerseyDao (configuartion);
     JiraTicketDao jiraTicketDao = new JiraTicketDao(configuartion);
     ArrayList<ReportRecord> records = new ArrayList<ReportRecord>();
 
@@ -29,6 +31,7 @@ public class CrossChecker {
     List<JitbitTicket> tickets = jitBitTicketDao.getTickets();
     logger.info("Getting JitBit Tickets Ends");
     logger.info("Getting Jira Information Starts");
+   
     for (JitbitTicket t : tickets) {
       List<CustomField> customFieldsList = jitBitTicketDao
           .getCustomFieldsList(t.getTicketID());
@@ -37,13 +40,12 @@ public class CrossChecker {
         records.add(new ReportRecord(t.getTicketID(), t.getSubject(), null,
             null));
       } else {
-        String jiraStatus = "";
-          jiraStatus = jiraTicketDao.getIssuState(jiraIDString);
+        String   jiraStatusAndResolution = jiraTicketDao.getIssuStateAndSolution(jiraIDString);
           records.add(new ReportRecord(t.getTicketID(), t.getSubject(),
-              jiraIDString, jiraStatus));
+              jiraIDString, jiraStatusAndResolution));
           if (configuartion.isUpdateJitbitTickes()){
             logger.info("Updating ticket number: "+t.getTicketID()+" starts");
-            jitBitTicketDao.updateJiraStatus(t.getTicketID(),jiraStatus);
+            jitBitTicketDao.updateJiraStatus(t.getTicketID(),jiraStatusAndResolution);
             logger.info("Updating ticket number: "+t.getTicketID()+" ends");
           }
       }

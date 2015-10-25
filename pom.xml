@@ -19,7 +19,6 @@
 
 		<!-- Logging -->
 		<slf4j.version>1.7.5</slf4j.version>
-		<logback.version>1.0.13</logback.version>
 
 
 		<jira-api.version>6.1.1</jira-api.version>
@@ -33,30 +32,12 @@
 
 	<dependencies>
 		<!-- Logging -->
-
 		<dependency>
-		<groupId>org.slf4j</groupId>
-		<artifactId>slf4j-simple</artifactId>
-		<version>${slf4j.version}</version>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-log4j12</artifactId>
+			<version>${slf4j.version}</version>
 		</dependency>
-<!-- 		<dependency> -->
-<!-- 			<groupId>ch.qos.logback</groupId> -->
-<!-- 			<artifactId>logback-core</artifactId> -->
-<!-- 			<version>${logback.version}</version> -->
-<!-- 		</dependency> -->
-<!-- 		<dependency> -->
-<!-- 			<groupId>ch.qos.logback</groupId> -->
-<!-- 			<artifactId>logback-classic</artifactId> -->
-<!-- 			<version>${logback.version}</version> -->
-<!-- 		</dependency> -->
 
-		<!-- Spring and Transactions -->
-
-		<dependency>
-			<groupId>commons-codec</groupId>
-			<artifactId>commons-codec</artifactId>
-			<version>1.10</version>
-		</dependency>
 		<!-- Json Mapping -->
 		<dependency>
 			<groupId>com.fasterxml.jackson.core</groupId>
@@ -69,7 +50,7 @@
 		<dependency>
 			<groupId>com.atlassian.jira</groupId>
 			<artifactId>jira-rest-java-client-api</artifactId>
-			<version>2.0.0-m25</version>
+			<version>${jira-rest-java-client-core.version}</version>
 			<exclusions>
 				<exclusion>
 					<groupId>com.sun.jersey</groupId>
@@ -89,7 +70,7 @@
 		<dependency>
 			<groupId>com.atlassian.jira</groupId>
 			<artifactId>jira-rest-java-client-core</artifactId>
-			<version>2.0.0-m25</version>
+			<version>${jira-rest-java-client-core.version}</version>
 			<exclusions>
 				<exclusion>
 					<groupId>com.sun.jersey</groupId>
@@ -105,13 +86,12 @@
 				</exclusion>
 			</exclusions>
 		</dependency>
+
 		<dependency>
 			<groupId>org.codehaus.jettison</groupId>
 			<artifactId>jettison</artifactId>
 			<version>1.3.7</version>
 		</dependency>
-
-
 
 		<dependency>
 			<groupId>org.glassfish.jersey.core</groupId>
@@ -119,15 +99,11 @@
 			<version>2.22.1</version>
 		</dependency>
 
-
 		<dependency>
 			<groupId>org.glassfish.jersey.media</groupId>
 			<artifactId>jersey-media-json-jackson</artifactId>
 			<version>2.22.1</version>
 		</dependency>
-
-
-
 
 		<!-- static list of items generation -->
 		<dependency>
@@ -135,6 +111,7 @@
 			<artifactId>velocity</artifactId>
 			<version>1.7</version>
 		</dependency>
+
 		<!-- configuration reader -->
 		<dependency>
 			<groupId>commons-configuration</groupId>
@@ -185,7 +162,7 @@
 	<repositories>
 		<repository>
 			<id>atlassian-public</id>
-			<url>https://m2proxy.atlassian.com/repository/public</url>
+			<url>https://maven.atlassian.com/public/</url>
 			<snapshots>
 				<enabled>true</enabled>
 				<updatePolicy>daily</updatePolicy>

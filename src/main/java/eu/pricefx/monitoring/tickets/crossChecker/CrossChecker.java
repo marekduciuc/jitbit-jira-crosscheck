@@ -7,6 +7,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import eu.pricefx.monitoring.tickets.crossChecker.configuration.Configuartion;
+import eu.pricefx.monitoring.tickets.crossChecker.dao.IJiraTicketDao;
 import eu.pricefx.monitoring.tickets.crossChecker.dao.JiraTicketDao;
 import eu.pricefx.monitoring.tickets.crossChecker.dao.JitbitTicketJerseyDao;
 import eu.pricefx.monitoring.tickets.crossChecker.model.jitbit.CustomField;
@@ -24,7 +25,7 @@ public class CrossChecker {
 
     Configuartion configuartion = Configuartion.getInstance();
     JitbitTicketJerseyDao jitBitTicketDao = new JitbitTicketJerseyDao (configuartion);
-    JiraTicketDao jiraTicketDao = new JiraTicketDao(configuartion);
+    IJiraTicketDao jiraTicketDao = new JiraTicketDao(configuartion);
     ArrayList<ReportRecord> records = new ArrayList<ReportRecord>();
 
     logger.info("Getting JitBit Tickets Start");

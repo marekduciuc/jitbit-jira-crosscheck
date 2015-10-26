@@ -20,7 +20,7 @@ import eu.pricefx.monitoring.tickets.crossChecker.model.jitbit.JitBitTicketDetai
 import eu.pricefx.monitoring.tickets.crossChecker.model.jitbit.JitbitStatus;
 import eu.pricefx.monitoring.tickets.crossChecker.model.jitbit.JitbitTicket;
 
-public class JitbitTicketJerseyDao implements IJitbitTicketDao {
+public class JitbitTicketDao implements IJitbitTicketDao {
 
   final static int JIRA_STATUS_FIELD_ID = 11705;
   final static int EXTRNAL_REFERENCE_FIELD_ID = 10233;
@@ -31,7 +31,7 @@ public class JitbitTicketJerseyDao implements IJitbitTicketDao {
   final HttpAuthenticationFeature httpAuthenticationFeature;
   final javax.ws.rs.client.Client client;
 
-  public JitbitTicketJerseyDao(Configuartion config) {
+  public JitbitTicketDao(Configuartion config) {
     this.config = config;
     ticketListurl = config.getJitBitTicketListUrl();
     ticketDetetailUrl = config.getJitBitTicketUrl();
